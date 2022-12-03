@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.User;
 import com.example.demo.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,10 @@ public class UserService {
                 return 0;
             }
         }
-        // success
-        // use cookie to maintain session
-        
         return 1;
+    }
+    
+    public boolean hasUser(String username) {
+        return userMapper.selectByPrimaryKey(username).getUsername() != null;
     }
 }
