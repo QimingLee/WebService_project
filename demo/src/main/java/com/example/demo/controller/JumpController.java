@@ -9,20 +9,21 @@ public class JumpController {
 
     @RequestMapping("/1")
     public String t1(){
-
-        return "/111";
+        return "/dashboard";
     }
 
+    @RequestMapping("/dashboard")
+    public String gotoDashboard() {
+        return "/dashboard";
+    }
+    
     @RequestMapping("/search")
     public String t2(){
-
         return "/search";
     }
 
     @RequestMapping("/")
     public String start(){
-
         return "/login";
-
     }
 }

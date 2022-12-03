@@ -4,16 +4,37 @@ import com.baidu.ai.aip.utils.*;
 import java.net.URLEncoder;
 
 import com.baidubce.services.lss.model.Auth;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.List;
-import java.util.Map;
 
 public class ocr {
+
+    private static final double select_rating = 0.75;
+    
+    /***
+     * 判断字符是否为中文
+     * @param ch 需要判断的字符
+     * @return 中文返回true，非中文返回false
+     */
+    private static boolean isChinese(char ch) {
+        //获取此字符的UniCodeBlock
+        Character.UnicodeBlock ub = Character.UnicodeBlock.of(ch);
+        //  GENERAL_PUNCTUATION 判断中文的“号
+        //  CJK_SYMBOLS_AND_PUNCTUATION 判断中文的。号
+        //  HALFWIDTH_AND_FULLWIDTH_FORMS 判断中文的，号
+        if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS 
+            || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
+            || ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
+            || ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B
+            || ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION         // 判断中文的。号
+            || ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS       // 判断中文的，号
+            || ub == Character.UnicodeBlock.GENERAL_PUNCTUATION                 // 判断中文的“号
+        ) {
+            return true;
+        }
+        return false;
+    }
     
     public static String callOCR(String filePath) {
         // 请求 URL
@@ -30,7 +51,8 @@ public class ocr {
 
             String result = HttpUtil.post(url, accessToken, param);
             // System.out.println(result);
-            return result;
+            return concatResult(result);
+//            return result;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -39,16 +61,27 @@ public class ocr {
     
     public static String concatResult(String words) {
         JSONObject jsonObject = new JSONObject(words);
-        String result = "";
-        JSONObject words_result = jsonObject.getJSONObject("words_result");
+        JSONArray wordList = jsonObject.getJSONArray("words_result");
         
-        return result;
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < wordList.length(); i++) {
+            String curStr = ((JSONObject)wordList.get(i)).getString("words");
+            double appearance = 0;
+            for (int j = 0; j < curStr.length(); j++) {
+                if (isChinese(curStr.charAt(j)) || Character.isDigit(curStr.charAt(j)))
+                    appearance += 1.0;
+            }
+            if (appearance >= (double)curStr.length() * ocr.select_rating) {
+                result.append(curStr);
+            }
+        }
+        return result.toString();
     }
     
     public static void main(String[] args) {
         System.out.println("OCR Debugging");
         
-        System.out.println(callOCR("./test1.png"));
+        System.out.println(callOCR("./test3.png"));
         
     }
 }

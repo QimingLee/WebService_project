@@ -14,15 +14,15 @@ public class UserService {
 
         String pw = userMapper.selectPasswordByPrimaryKey(username);
         if(pw == null){
-
             return -1;
         } else {
-
             if(!pw.equals(password)){
-
                 return 0;
             }
         }
+        // success
+        // use cookie to maintain session
+        
         return 1;
     }
 }
