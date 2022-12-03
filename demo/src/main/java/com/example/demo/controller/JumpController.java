@@ -7,11 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class JumpController {
 
-    @RequestMapping("/1")
-    public String t1(){
-        return "/dashboard";
-    }
-
     @RequestMapping("/dashboard")
     public String gotoDashboard() {
         return "/dashboard";
@@ -25,5 +20,10 @@ public class JumpController {
     @RequestMapping("/")
     public String start(){
         return "/login";
+    }
+    
+    @RequestMapping("/map")
+    public String map() { 
+        return "/map"; 
     }
 }

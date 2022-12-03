@@ -9,6 +9,9 @@
         function logout() {
             window.location.href = "/user/logout";
         }
+        function goSearchPage() {
+            window.location.href = "/search";
+        }
     </script>
 
     <script>
@@ -42,7 +45,7 @@
 <body>
 Hello, user <span id="username">xxx</span> !
 
-<button>Search</button>
+<button id="seaerch" onclick="goSearchPage()">Search</button>
 
 <button id="logout" onclick="logout()">logout</button>
 

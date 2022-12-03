@@ -40,7 +40,8 @@ public class UserController {
         return ret;
     }
     
-    @RequestMapping("/dashboard")
+    // TODO To be fixed
+    @RequestMapping("/buildDashboard")
     public void buildDashboard() {
         Cookie[] cookies = request.getCookies();
         boolean hasUser = false;
@@ -82,5 +83,19 @@ public class UserController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    
+    @RequestMapping("/locate") 
+    public void locateToMap(String location) {
+        try {
+            response.sendRedirect("/map?location=" + location);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    @RequestMapping("/map")
+    public String loadMap() {
+        return "/map";
     }
 }

@@ -3,12 +3,11 @@ package com.example.demo.ocr;
 import com.baidu.ai.aip.utils.*;
 import java.net.URLEncoder;
 
-import com.baidubce.services.lss.model.Auth;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 
-public class ocr {
+public class OCR {
 
     private static final double select_rating = 0.75;
     
@@ -71,7 +70,7 @@ public class ocr {
                 if (isChinese(curStr.charAt(j)) || Character.isDigit(curStr.charAt(j)))
                     appearance += 1.0;
             }
-            if (appearance >= (double)curStr.length() * ocr.select_rating) {
+            if (appearance >= (double)curStr.length() * OCR.select_rating) {
                 result.append(curStr);
             }
         }
