@@ -2,9 +2,85 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>OCR Image Search</title>
+    <script src="/js/jquery-3.6.1.min.js"></script>
+    <script src="/js/js.cookie.min.js"></script>
+    
+    <script>
+        function callOCR(imageHash) {
+            console.log("image hash OCR: " + imageHash);
+            $.ajax({
+                url: "/image/requestOCR",
+                type: "POST",
+                data: imageHash,
+                dataType: "text",
+                contentType: "text/plain",
+                success: function (ocr_result) {
+                    $("#ocr_result").val(ocr_result);
+                    console.log(ocr_result);
+                }
+            });
+        }
+        
+        function execSearch() {
+            const mResult = $("#ocr_result").val();
+            document.location.href = "/map?location=" + mResult;
+        }
+    </script>
+    
+    <script>
+        let imageHash = "no-image";
+        $(document).ready(function () {
+            // bind form submission event
+            $("#file-upload-form").on("submit", function (e) {
+
+                // cancel the default behavior
+                e.preventDefault();
+
+                // use $.ajax() to upload file
+                $.ajax({
+                    url: "/image/uploadImage",
+                    type: "POST",
+                    data: new FormData(this),
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    success: function (res) {
+                        console.log(res);
+                        imageHash = res;
+                        callOCR(imageHash);
+                    },
+                    error: function (err) {
+                        console.error(err);
+                    }
+                });
+            });
+        });
+    </script>
+    
+    <style>
+        input {
+            width: fit-content;
+        }
+    </style>
+    
 </head>
 <body>
-Search
+    <div style="margin: 20px 20px 20px 20px;">
+        <form id="file-upload-form">
+            <label for="file-upload-input">Select file to upload</label>
+            <input type="file" id="file-upload-input" name="file">
+            <button type="submit">Start Upload</button>
+        </form>
+    </div>
+
+    <div style="margin-top: 100px;">
+        <input id="ocr_result">
+    </div>
+
+    <div>
+        <button id="execSearch" onclick="execSearch()">Go!</button>
+    </div>
 </body>
 </html>
