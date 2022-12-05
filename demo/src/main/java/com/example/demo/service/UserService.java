@@ -12,7 +12,6 @@ public class UserService {
     private final UserMapper userMapper;
 
     public int login(String username, String password){
-
         String pw = userMapper.selectPasswordByPrimaryKey(username);
         if(pw == null){
             return -1;
@@ -29,8 +28,6 @@ public class UserService {
     }
 
     public int register(String username, String password){
-
-
         String pw = userMapper.selectPasswordByPrimaryKey(username);
         if(pw == null){
             User user_new = new User();
@@ -39,9 +36,7 @@ public class UserService {
             userMapper.insert(user_new);
             return 1;
         } else {
-
             return 0;
         }
-
     }
 }
