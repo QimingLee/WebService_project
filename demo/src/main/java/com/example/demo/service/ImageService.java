@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Service
 @RequiredArgsConstructor
 public class ImageService {
@@ -15,7 +14,7 @@ public class ImageService {
     
     public List<String> getHistoryImageByUsername(String username) {
         ArrayList<String> ret = new ArrayList<>();
-        ret.add("TestImageUrl");
+        ret.add("TestImageUrl.png");
         ret.add("TestImageResult");
         return ret;
     }

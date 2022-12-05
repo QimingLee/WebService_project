@@ -24,20 +24,7 @@
         
         function execSearch() {
             const mResult = $("#ocr_result").val();
-
-            $.ajax({
-                url: "/user/locate",
-                type: "POST",
-                data: mResult,
-                dataType: "text",
-                contentType: "text/plain",
-                success: function (res) {
-                    
-                },
-                error: function (err) {
-                    console.log(err);
-                }
-            });
+            document.location.href = "/map?location=" + mResult;
         }
     </script>
     
@@ -93,7 +80,7 @@
     </div>
 
     <div>
-        <button id="execSearch" onclick="execSearch">Go!</button>
+        <button id="execSearch" onclick="execSearch()">Go!</button>
     </div>
 </body>
 </html>

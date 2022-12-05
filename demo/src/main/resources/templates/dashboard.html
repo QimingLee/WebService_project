@@ -9,8 +9,11 @@
         function logout() {
             window.location.href = "/user/logout";
         }
-        function goSearchPage() {
-            window.location.href = "/search";
+        function goSearchPage(location) {
+            if (typeof location === 'undefined')
+                window.location.href = "/search";
+            else
+                window.location.href = "/map?location=" + location;
         }
     </script>
 
@@ -18,6 +21,8 @@
         $(document).ready(() => {
             let username = Cookies.get('username');
             let historyRec = [];
+            $("#username").val(username);
+            console.log("Username (fr. cookie): " + username);
 
             $.post('image/getHistory',
                 { username: username },
@@ -25,8 +30,9 @@
                     const arr_len = histories.length;
                     for (let i = 0; i < arr_len; i += 2) {
                         $("#table-main").append(`<tr>
-                            <td><img src="${histories[i]}"></td>
+                            <td><img src="/img/${histories[i]}"></td>
                             <td>${histories[i + 1]}</td>
+                            <td><button onclick="goSearchPage('${histories[i + 1]}')">Use This Record to Locate</button></td>
                             </tr>`);
                         historyRec.push({url: histories[i], result: histories[i + 1]});
                     }

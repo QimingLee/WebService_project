@@ -27,4 +27,21 @@ public class UserService {
     public boolean hasUser(String username) {
         return userMapper.selectByPrimaryKey(username).getUsername() != null;
     }
+
+    public int register(String username, String password){
+
+
+        String pw = userMapper.selectPasswordByPrimaryKey(username);
+        if(pw == null){
+            User user_new = new User();
+            user_new.setUsername(username);
+            user_new.setPassword(password);
+            userMapper.insert(user_new);
+            return 1;
+        } else {
+
+            return 0;
+        }
+
+    }
 }

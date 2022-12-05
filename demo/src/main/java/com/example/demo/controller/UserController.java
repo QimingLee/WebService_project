@@ -30,7 +30,7 @@ public class UserController {
     protected HttpServletResponse response;
     
     @RequestMapping("/login")
-    public int login(String username, String password){
+    public int login(String username, String password) {
 
         int ret = userService.login(username, password);
         if (ret == 1) {
@@ -38,6 +38,11 @@ public class UserController {
             response.addCookie(cookie);
         }
         return ret;
+    }
+    
+    @RequestMapping("/register")
+    public int register(String username, String password) {
+        return userService.register(username, password);
     }
     
     // TODO To be fixed

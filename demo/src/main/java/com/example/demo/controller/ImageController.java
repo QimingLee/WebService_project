@@ -33,7 +33,7 @@ public class ImageController {
         hashId = hashId + originalName.substring(originalName.lastIndexOf("."));
         try {
             // upload directory
-            String UPLOAD_DIR = "./media/img/";
+            String UPLOAD_DIR = "./static/img/";
             
             try(FileOutputStream out = new FileOutputStream(new File(UPLOAD_DIR, hashId))) {
                 out.write(file.getBytes());
@@ -55,7 +55,7 @@ public class ImageController {
             System.out.println("Illegal image hash!");
             return null;
         }
-        result = OCR.callOCR("./media/img/" + imageHash);
+        result = OCR.callOCR("./static/img/" + imageHash);
         System.out.println("OCR result of " + imageHash + " : " + result);
         return result;
     }

@@ -26,4 +26,9 @@ public class JumpController {
     public String map() { 
         return "/map"; 
     }
+    
+    @RequestMapping("/register")
+    public String register() {
+        return "/register";
+    }
 }
