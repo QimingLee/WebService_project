@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <script src="/js/jquery-3.6.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script>
     <script type="text/javascript">
         function tryLogin() {
             //let username = $("#username").value;
@@ -33,12 +35,12 @@
 <div>
     <table>
         <tr>
-            <label for="username">用户名</label>
-            <input id="username" type="text">
-            <label for="password">密码</label>
-            <input id="password" type="text">
-            <button id="submit" onclick="tryLogin()">登录</button>
-            <button id="register" onclick="tryRegister()">注册</button>
+            <label class="ui label" for="username">用户名</label>
+            <div class="ui input"><input id="username" type="text"></div>
+            <label class="ui label" for="password">密码</label>
+            <div class="ui input"><input id="password" type="text"></div>
+            <button id="submit" class="ui button" onclick="tryLogin()">登录</button>
+            <button id="register" class="ui button" onclick="tryRegister()">注册</button>
         </tr>
     </table>
 </div>

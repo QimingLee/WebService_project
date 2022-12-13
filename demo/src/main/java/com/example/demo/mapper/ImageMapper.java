@@ -4,6 +4,8 @@ import com.example.demo.entity.Image;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Mapper
 @Repository
 public interface ImageMapper {
@@ -14,6 +16,8 @@ public interface ImageMapper {
     int insertSelective(Image record);
 
     Image selectByPrimaryKey(String image);
+
+    List<Image> selectImagesByUploader(String uploader);
 
     int updateByPrimaryKeySelective(Image record);
 

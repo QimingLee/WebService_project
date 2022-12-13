@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Image;
 import com.example.demo.mapper.ImageMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,17 @@ public class ImageService {
     
     public List<String> getHistoryImageByUsername(String username) {
         ArrayList<String> ret = new ArrayList<>();
-        ret.add("TestImageUrl.png");
-        ret.add("TestImageResult");
+        
+        List<Image> qryImage = imgMapper.selectImagesByUploader(username);
+        for (int i = 0; i < qryImage.size(); i++) {
+            ret.add(qryImage.get(i).getImage());
+            ret.add(qryImage.get(i).getText());
+            
+        }
+        
+        System.out.println("History of : " + username);
+        System.out.println(ret);
+        System.out.println(qryImage);
         return ret;
     }
 }

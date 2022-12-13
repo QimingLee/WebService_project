@@ -5,6 +5,8 @@
     <title>OCR Image Search</title>
     <script src="/js/jquery-3.6.1.min.js"></script>
     <script src="/js/js.cookie.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script>
     
     <script>
         function callOCR(imageHash) {
@@ -67,20 +69,22 @@
     
 </head>
 <body>
-    <div style="margin: 20px 20px 20px 20px;">
-        <form id="file-upload-form">
+    <div style="margin: 20px 20px 20px 20px; ">
+        <form id="file-upload-form" style="alignment: center;">
             <label for="file-upload-input">Select file to upload</label>
-            <input type="file" id="file-upload-input" name="file">
-            <button type="submit">Start Upload</button>
+            <div class="ui file input" style="margin: 10px 10px 10px 10px;">
+                <input type="file" id="file-upload-input" name="file">
+            </div>
+            <button class="ui button" type="submit">Start Upload</button>
         </form>
     </div>
 
-    <div style="margin-top: 100px;">
+    <div style="margin-top: 100px;" class="ui input">
         <input id="ocr_result">
     </div>
 
     <div>
-        <button id="execSearch" onclick="execSearch()">Go!</button>
+        <button class="ui button" id="execSearch" onclick="execSearch()">Go!</button>
     </div>
 </body>
 </html>

@@ -4,9 +4,10 @@
   <resultMap id="BaseResultMap" type="com.example.demo.entity.Image">
     <id column="image" jdbcType="VARCHAR" property="image" />
     <result column="text" jdbcType="VARCHAR" property="text" />
+    <result column="uploader" jdbcType="VARCHAR" property="uploader" />
   </resultMap>
   <sql id="Base_Column_List">
-    image, `text`
+    image, `text`, uploader
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -19,13 +20,19 @@
       text
     from text where image = #{image}
   </select>
+  <select id="selectImagesByUploader" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from image
+    where uploader = #{uploader,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from image
     where image = #{image,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" keyColumn="image" keyProperty="image" parameterType="com.example.demo.entity.Image" useGeneratedKeys="true">
-    insert into image (`text`)
-    values (#{text,jdbcType=VARCHAR})
+    insert into image (image, `text`, uploader)
+    values (#{image,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, #{uploader,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="image" keyProperty="image" parameterType="com.example.demo.entity.Image" useGeneratedKeys="true">
     insert into image

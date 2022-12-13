@@ -21,6 +21,8 @@ public class ImageController {
     @RequestMapping("/getHistory")
     @ResponseBody
     public List<String> getHistoryByUsername(String username) {
+        // TODO
+        username = "gnaq";
         return imgService.getHistoryImageByUsername(username);
     }
     
