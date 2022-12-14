@@ -37,6 +37,8 @@ public class UserController {
             Cookie cookie = new Cookie("username", username);
             response.addCookie(cookie);
         }
+        System.out.println("Received Login Request");
+        System.out.println("Ret = " + ret);
         return ret;
     }
     

@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>控制台 - Map Service</title>
     <script src="/js/jquery-3.6.1.min.js"></script>
     <script src="/js/js.cookie.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script>
+    
     <script type="text/javascript">
         function logout() {
             window.location.href = "/user/logout";
@@ -32,7 +35,11 @@
                         $("#table-main").append(`<tr>
                             <td><img src="/img/${histories[i]}"></td>
                             <td>${histories[i + 1]}</td>
-                            <td><button onclick="goSearchPage('${histories[i + 1]}')">Use This Record to Locate</button></td>
+                            <td>
+                                <button class="ui labeled icon button" onclick="goSearchPage('${histories[i + 1]}')">
+                                    <i class="search icon"></i> 使用此结果搜索
+                                </button>
+                            </td>
                             </tr>`);
                         historyRec.push({url: histories[i], result: histories[i + 1]});
                     }
@@ -42,30 +49,46 @@
     </script>
     
     <style>
-        th,td,table {
-            border: 1px solid;
+        .dashboard {
+            margin-top: 5em;
         }
     </style>
     
 </head>
 <body>
-Hello, user <span id="username">xxx</span> !
+    <div class="ui container dashboard">
+        <div>
+            <h1 class="ui header">
+                欢迎使用 OCR 图片地理位置识别导航！
+                <span style="float: right;"><button class="ui labeled icon red button" id="logout" onclick="logout()">
+                    <i class="door open icon"></i>
+                    登出
+                </button></span>
+            </h1>
+            
+        </div>
 
-<button id="seaerch" onclick="goSearchPage()">Search</button>
+        <div class="ui stacked segment center aligned">
+            <button class="ui labeled icon primary button" id="search" onclick="goSearchPage()">
+                <i class="search icon"></i>
+                按图搜索...
+            </button>
+        </div>
 
-<button id="logout" onclick="logout()">logout</button>
-
-<table style>
-    <thead>
-    <thead>
-    <tr>
-        <th>图片</th>
-        <th>识别结果</th>
-    </tr>
-    </thead>
-    </thead>
-    <tbody id="table-main"></tbody>
-</table>
-
+        <div class="ui stacked segment center aligned">
+            <table class="ui celled table center aligned">
+                <thead>
+                <thead>
+                <tr>
+                    <th>图片</th>
+                    <th>识别结果</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                </thead>
+                <tbody id="table-main"></tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>

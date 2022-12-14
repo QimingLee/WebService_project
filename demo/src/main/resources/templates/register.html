@@ -2,42 +2,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script type="text/javascript"></script>
+    <title>注册 - Map Service</title>
     <script src="/js/jquery-3.6.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script>
     <script type="text/javascript">
-    function f() {
-
-      //let username = $("#username").value;
-      let username = document.getElementById("username").value;
-      let password = document.getElementById("password").value;
-      $.post('/user/register', {
-        username : username,
-        password : password
-      },function (data) {
-        alert(data);
-        switch (data) {
-
-
-
-          case 0: alert("用户名已经存在！");
-            break;
-          case 1:  alert("注册成功，欢迎使用地图服务！")
-            window.location.href = "/";
+        function registerUser() {
+            //let username = $("#username").value;
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            $.post('/user/register', {
+                username : username,
+                password : password
+            },function (data) {
+                switch (data) {
+                    case 0: alert("用户名已经存在！");
+                        break;
+                    case 1:  alert("注册成功，欢迎使用地图服务！")
+                        window.location.href = "/";
+                }
+            });
         }
-      });
-
-    }
     </script>
+    <style>
+        .login {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 300px;
+            min-height: 300px;
+            alignment: center;
+        }
+        body {
+            background: rgb(249,204,223);
+            background: linear-gradient(159deg, rgba(249,204,223,1) 0%, rgba(44,131,233,0.342472022988883) 100%);
+        }
+        .login-base {
+            margin: 1em 1em 1em 1em;
+        }
+    </style>
 </head>
+
 <body>
-注册界面
+<div class="login">
+    <div class="column">
+        <h2 class="ui teal header center aligned">
+            <div class="content">
+                注册账户
+            </div>
+        </h2>
+        <div class="ui stacked segment center aligned">
+            <div class="field login-base">
+                <div class="ui left icon input">
+                    <i class="user icon"></i>
+                    <input type="text" id = "username" placeholder="用户名">
+                </div>
+            </div>
+            <div class="field login-base">
+                <div class="ui left icon input">
+                    <i class="lock icon"></i>
+                    <input type="password" id="password" placeholder="密码">
+                </div>
+            </div>
+            <button id="submit" class="ui button" onclick="registerUser()">注册</button>
+        </div>
+    </div>
+</div>
 </body>
-<table>
-  <label for="username">用户名</label>
-  <input id="username" type="text">
-  <label for="password">密码</label>
-  <input id="password" type="text">
-  <button id="register" onclick="f()">注册</button>
-</table>
 </html>
