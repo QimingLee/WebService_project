@@ -10,6 +10,7 @@
     
     <script type="text/javascript">
         function logout() {
+            Cookies.remove('username');
             window.location.href = "/user/logout";
         }
         function goSearchPage(location) {
@@ -18,13 +19,27 @@
             else
                 window.location.href = "/map?location=" + location;
         }
+        function delRec(imageHash) {
+            $.ajax({
+                url: "/image/requestDel",
+                type: "POST",
+                data: imageHash,
+                dataType: "text",
+                contentType: "text/plain",
+                success: function (ocr_result) {
+                    console.log(ocr_result);
+                    if (ocr_result === "1")
+                        location.reload();
+                }
+            });
+        }
     </script>
 
     <script>
         $(document).ready(() => {
             let username = Cookies.get('username');
             let historyRec = [];
-            $("#username").val(username);
+            $("#usernamePl").text(username);
             console.log("Username (fr. cookie): " + username);
 
             $.post('image/getHistory',
@@ -38,6 +53,11 @@
                             <td>
                                 <button class="ui labeled icon button" onclick="goSearchPage('${histories[i + 1]}')">
                                     <i class="search icon"></i> 使用此结果搜索
+                                </button>
+                                <br>
+                                <br>
+                                <button class="ui labeled icon button red" onclick="delRec('${histories[i]}')">
+                                    <i class="trash icon"></i> 删除这个结果
                                 </button>
                             </td>
                             </tr>`);
@@ -59,7 +79,7 @@
     <div class="ui container dashboard">
         <div>
             <h1 class="ui header">
-                欢迎使用 OCR 图片地理位置识别导航！
+                欢迎使用 OCR 图片地理位置识别导航，<span id="usernamePl">您的用户名</span>！
                 <span style="float: right;"><button class="ui labeled icon red button" id="logout" onclick="logout()">
                     <i class="door open icon"></i>
                     登出

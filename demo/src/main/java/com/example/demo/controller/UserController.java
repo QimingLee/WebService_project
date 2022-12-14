@@ -30,13 +30,9 @@ public class UserController {
     protected HttpServletResponse response;
     
     @RequestMapping("/login")
-    public int login(String username, String password) {
+    public int login(String username, String password) throws IOException {
 
         int ret = userService.login(username, password);
-        if (ret == 1) {
-            Cookie cookie = new Cookie("username", username);
-            response.addCookie(cookie);
-        }
         System.out.println("Received Login Request");
         System.out.println("Ret = " + ret);
         return ret;
@@ -65,6 +61,7 @@ public class UserController {
         }
         else {
             try {
+                
                 response.sendRedirect("/dashboard");
             } catch (IOException e) {
                 throw new RuntimeException(e);

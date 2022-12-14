@@ -11,6 +11,12 @@
             //let username = $("#username").value;
             let username = document.getElementById("username").value;
             let password = document.getElementById("password").value;
+            console.log(typeof username);
+            if (username === "" || password === "")
+            {
+                alert("用户名和密码不能为空！");
+                return;
+            }
             $.post('/user/register', {
                 username : username,
                 password : password

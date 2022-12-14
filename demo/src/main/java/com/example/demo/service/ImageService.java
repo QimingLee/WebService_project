@@ -28,4 +28,12 @@ public class ImageService {
         System.out.println(qryImage);
         return ret;
     }
+    
+    public void InsertImage(Image img) {
+        imgMapper.insert(img);
+    }
+    
+    public void DeleteImage(String ImageHash) {
+        imgMapper.deleteByPrimaryKey(ImageHash);
+    }
 }

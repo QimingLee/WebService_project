@@ -9,12 +9,13 @@
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js"></script>
     
     <script>
-        function callOCR(imageHash) {
+        function callOCR(username, imageHash) {
             console.log("image hash OCR: " + imageHash);
+            console.log("Uploader: " + username);
             $.ajax({
                 url: "/image/requestOCR",
                 type: "POST",
-                data: imageHash,
+                data: imageHash + " " + username,
                 dataType: "text",
                 contentType: "text/plain",
                 success: function (ocr_result) {
@@ -42,6 +43,8 @@
 
                 // cancel the default behavior
                 e.preventDefault();
+                let username = Cookies.get('username');
+                console.log("Username (fr. cookie): " + username);
 
                 // use $.ajax() to upload file
                 $.ajax({
@@ -55,7 +58,7 @@
                     success: function (res) {
                         console.log(res);
                         imageHash = res;
-                        callOCR(imageHash);
+                        callOCR(username, imageHash);
                     },
                     error: function (err) {
                         console.error(err);

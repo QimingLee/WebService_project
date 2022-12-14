@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Image;
 import com.example.demo.ocr.OCR;
 import com.example.demo.service.ImageService;
 import com.example.demo.service.UserService;
@@ -21,8 +22,7 @@ public class ImageController {
     @RequestMapping("/getHistory")
     @ResponseBody
     public List<String> getHistoryByUsername(String username) {
-        // TODO
-        username = "gnaq";
+        System.out.println("Request history of user" + username);
         return imgService.getHistoryImageByUsername(username);
     }
     
@@ -51,14 +51,34 @@ public class ImageController {
     }
     
     @RequestMapping(value = "/requestOCR", method = RequestMethod.POST)
-    public String requestOCR(@RequestBody String imageHash) {
-        String result = "";
-        if (imageHash == null) {
+    public String requestOCR(@RequestBody String imageHashwithUploader) {
+        if (imageHashwithUploader == null) {
             System.out.println("Illegal image hash!");
             return null;
         }
+        String[] splitted = imageHashwithUploader.split("\\s+");
+        String imageHash = splitted[0];
+        String uploader = splitted[1];
+        String result = "";
+        
         result = OCR.callOCR("./static/img/" + imageHash);
-        System.out.println("OCR result of " + imageHash + " : " + result);
+        System.out.println("OCR result by uploader " + uploader + " of " + imageHash + " : " + result);
+        
+        Image img = new Image();
+        img.setImage(imageHash);
+        img.setText(result);
+        img.setUploader(uploader);
+        imgService.InsertImage(img);
+        
         return result;
+    }
+    
+    @RequestMapping(value = "/requestDel", method = RequestMethod.POST)
+    public int delImage(@RequestBody String imageHash) {
+        if (imageHash == null)
+                return 1;
+        System.out.println("Request deletion of image hash" + imageHash);
+        imgService.DeleteImage(imageHash);
+        return 1;
     }
 }

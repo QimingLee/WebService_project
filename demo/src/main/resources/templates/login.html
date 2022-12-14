@@ -24,6 +24,7 @@
                         alert("密码错误");
                         break;
                     case 1:
+                        document.cookie = "username=" + username;
                         window.location.href = "/user/buildDashboard";
                 }
             });
