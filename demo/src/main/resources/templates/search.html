@@ -28,6 +28,10 @@
             const mResult = $("#ocr_result").val();
             document.location.href = "/map?location=" + mResult;
         }
+        
+        function backtoDashboard() {
+            document.location.href = "/dashboard";
+        }
     </script>
     
     <script>
@@ -62,29 +66,57 @@
     </script>
     
     <style>
-        input {
-            width: fit-content;
+        .main {
+            padding-top: 3em;
+            overflow: hidden;
+        }
+        .result-input {
+            padding: 5px;
+            margin: 5px;
+            width: -webkit-calc(100% - 10px);
+            width: -moz-calc(100% - 10px);
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -o-box-sizing: border-box;
+            -ms-box-sizing: border-box;
+            box-sizing: border-box;
         }
     </style>
     
 </head>
 <body>
-    <div style="margin: 20px 20px 20px 20px; ">
-        <form id="file-upload-form" style="alignment: center;">
-            <label for="file-upload-input">Select file to upload</label>
-            <div class="ui file input" style="margin: 10px 10px 10px 10px;">
-                <input type="file" id="file-upload-input" name="file">
+    <div class="ui container main">
+        <button class="ui button" onclick="backtoDashboard()">
+            返回控制台
+        </button>
+        
+        <div class="ui stacked segment center aligned">
+            <form class="ui form center aligned" id="file-upload-form">
+                <h2 class="ui header center aligned">选择要上传的文件</h2>
+                <div class="ui file input" style="max-width: 300px;">
+                    <input type="file" id="file-upload-input" name="file">
+                </div>
+                <br>
+                <br>
+                <button class="ui button labeled icon primary" type="submit">
+                    <i class="file upload icon"></i>
+                    上传图片
+                </button>
+            </form>
+        </div>
+
+        <div class="ui stacked segment center aligned">
+            <div class="ui input result-input">
+                <input id="ocr_result">
             </div>
-            <button class="ui button" type="submit">Start Upload</button>
-        </form>
-    </div>
-
-    <div style="margin-top: 100px;" class="ui input">
-        <input id="ocr_result">
-    </div>
-
-    <div>
-        <button class="ui button" id="execSearch" onclick="execSearch()">Go!</button>
+            <br><br>
+            <div>
+                <button class="ui button labeled icon primary red" id="execSearch" onclick="execSearch()">
+                    <i class="location arrow icon"></i>
+                    Go!
+                </button>
+            </div>
+        </div>
     </div>
 </body>
 </html>
